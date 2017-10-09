@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<all>
+  <biz>
+    <name>Amazon Distribution Center</name>
+    <phone>(866) 437-9078</phone>
+    <site>http://amazon.com</site>
+    <mail>amazon@amazon.com</mail>
+    <street>4400 12th St Ext</street>
+    <city>West Columbia</city>
+    <state>SC</state>
+    <zip>29172</zip>
+  </biz>
+  <biz>
+    <name>Best Buy</name>
+    <phone>(803) 749-2188</phone>
+    <site>http://bestbuy.com</site>
+    <mail>bestbuy@bestbuy.com</mail>
+    <street>5135 Sunset Blvd</street>
+    <city>Lexington</city>
+    <state>SC</state>
+    <zip>29072</zip>
+  </biz>
+  <biz>
+    <name>Krispy Kreme</name>
+    <phone>(803) 926-9943</phone>
+    <site>http://krispykreme.com</site>
+    <mail>krispykreme@krispykreme.com</mail>
+    <street>1200 Knox Abbott Dr</street>
+    <city>Cayce</city>
+    <state>SC</state>
+    <zip>29033</zip>
+  </biz>
+  <biz>
+    <name>Moes Southwest Grill</name>
+    <phone>(803) 256-9663</phone>
+    <site>http://moes.com</site>
+    <mail>moes@moes.com</mail>
+    <street>625 Main St</street>
+    <city>Columbia</city>
+    <state>SC</state>
+    <zip>29201</zip>
+  </biz>
+  <biz>
+    <name>Swearingen Engineering Center</name>
+    <phone>(803) 777-4177</phone>
+    <site>http://sc.edu/</site>
+    <mail>StudentServices@cec.sc.edu</mail>
+    <street>315 Main St</street>
+    <city>Columbia</city>
+    <state>SC</state>
+    <zip>29208</zip>
+  </biz>
+</all>

@@ -1,0 +1,70 @@
+
+
+/* the table that displays the businesses */
+.biztable{
+  width:100%;
+  border-collapse: collapse;
+}
+.biztable td{
+  vertical-align: top;
+  padding: .35em 0;
+}
+
+
+/* icon spacing, etc */
+
+.bizicon{
+ background-color:#292b2c;
+ color: #fff;
+ border-radius:50%;
+ display:inline-block;
+ padding:.35em;
+ padding-right:.2em;
+ padding-bottom:.1em;
+ font-size:95%;
+ position:relative;
+ top:-.9em;
+ font-size:75%;
+}
+.biztable td.attr_icon span{
+  padding-top:.1em;
+  font-size:98%;
+}
+.biztable td.bizname,
+.biztable td.attr_icon{
+  padding-left:10px;
+}
+.biztable td.biz_icon{ width:6.5%;}
+.biztable .attr_icon{width:5%;}
+
+
+
+
+/* spacing and padding between businesses in table */
+.biztable .h1 td{padding-top:1em;}
+.biztable .h1{border-top:1px solid #ccc};
+.biztable .last td:nth-child(2){padding-bottom:2em;}
+
+
+
+.biztable .map{
+  text-align:right;
+  width:65%;
+}
+
+
+.modal-header{
+  background:#025aa5;
+  color:#fff;
+}
+.modal-body,
+.modal-footer{
+  padding:2em 4em;
+}
+.modal-body .form-group{padding:1em 0;}
+
+
+form.navbar-left{width:60%;}
+form.navbar-left .form-group,
+form.navbar-left .form-group input{width:100%;}
+

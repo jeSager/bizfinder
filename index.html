@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+  |*****************************************************************************
+  | File         :    index.html
+  | Project:     :    BizFinder
+  | Description  :    Yelp-Style-App-Clone   ** see meta data **
+  | Author       :    VKPatel
+  | Date         :    Sept. 2017
+  |
+  |*****************************************************************************
+-->
+
+
+
+<!--
+  |*****************************************************************************
+  | Head:
+  | =====
+  |  - Title
+  |  - Metadata
+  |  - Bootstrap Source Links
+  |  - Local Source Links
+  |
+  |*****************************************************************************
+-->
+<head>
+
+ <title>&nbsp;BizFinder</title>
+
+ <meta charset="utf-8"/>
+ <meta name="Description"
+  content=  "This is a demo Yelp-Style-App-Clone.  This app will not allow for
+   reviews.  Features include:  the ability to add and view business information.
+   Data is added using javascript, stored using xml, and displayed using html.">
+ <meta name="Keywords"
+  content= "bizfinder yelp business locate business help restaurant food hotel
+   motel car rental">
+
+ <!-- bootstrap cdn -->
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+ <!-- local -->
+ <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+ <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+
+
+
+<!--
+  |*****************************************************************************
+  | Body:
+  | =====
+  |  - Bootstrap Navigation
+  |  - Add Business Modal
+  |  - Script:
+  |    - Load XML
+  |    - Search Function
+  |
+  |*****************************************************************************
+-->
+<body>
+
+
+
+<!--
+  |*****************************************************************************
+  | Bootstrap Navigation
+  | ====================
+  |  - Search Bar
+  |  - Add New Business Button
+  |
+  |*************************************
+-->
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+ <div class="container">
+  <div class="navbar-header">
+   <button type="button"
+           class="navbar-toggle collapsed"
+           data-toggle="collapse"
+           data-target="#navbar"
+           aria-expanded="false"
+           aria-controls="navbar">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+   </button>
+   <a class="navbar-brand" href="#">
+    <span style="font-size:.7em" class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;&nbsp;BizFinder
+   </a>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+   <form class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+     <input id="searchinput" onkeyup="search()" type="text" class="form-control"
+            placeholder="Search for Business Names, Cities, or Keywords">
+    </div>
+   </form>
+   <ul class="nav navbar-nav navbar-right">
+    <li>
+     <form class="navbar-form navbar-right" role="search">
+       <button id="newbttn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Add Your Business</button>
+     </form>
+    </li>
+   </ul>
+  </div><!--/.nav-collapse -->
+ </div>
+</nav>
+
+
+
+
+<div id="mybiz" class="container" style="margin-top:4em;">
+
+<!--
+  ******************************************************************************
+  * Add Business Modal
+  * ==================
+  * - Used to send form input to write_data.php
+  *
+  **************************************
+-->
+ <div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+   <!-- Modal content-->
+   <div class="modal-content">
+
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Add a New Business</h4>
+    </div>
+
+    <form action="write_data.php" method="POST">
+    <div class="modal-body">
+
+      <div class="form-group">
+       <label for="nameinput">Business Name</label>
+       <input type="text" class="form-control" name="nameinput" placeholder="Enter your business name.">
+      </div>
+      <div class="form-group">
+       <label for="phoneinput">Phone Number</label>
+       <input type="tel" class="form-control" name="phoneinput" placeholder="Enter your business telephone number.">
+      </div>
+      <div class="form-group">
+       <label for="siteinput">Website</label>
+       <input type="text" class="form-control" name="siteinput" placeholder="Enter your website address.">
+      </div>
+      <div class="form-group">
+       <label for="mailinput">Email</label>
+       <input type="email" class="form-control" name="mailinput" placeholder="Enter your email address.">
+      </div>
+      <div class="form-group">
+       <label for="streetinput">Street Address</label>
+       <input type="text" class="form-control" name="streetinput" placeholder="Enter your street address.">
+      </div>
+      <div class="form-group">
+       <label for="cityinput">City</label>
+       <input type="text" class="form-control" name="cityinput" placeholder="Enter your city.">
+      </div>
+      <div class="form-group">
+       <label for="stateinput">State</label>
+       <input type="text" class="form-control" name="stateinput" placeholder="Enter your state.">
+      </div>
+      <div class="form-group">
+       <label for="zipinput">Zip Code</label>
+       <input type="text" class="form-control" name="zipinput" placeholder="Enter your zip code.">
+      </div>
+
+    </div> <!-- end modal body -->
+
+    <div class="modal-footer">
+     <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancel</button>
+     &nbsp;
+     &nbsp;
+     &nbsp;
+     &nbsp;
+     <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+    </div>
+    </form>
+
+   </div> <!--end content -->
+  </div> <!-- end dialog -->
+ </div> <!-- end fade -->
+
+
+
+<script>
+
+ /*****************************************************************************
+  *  Script:  Print the business table
+  *  =================================
+  *
+  *****************************************************************************/
+
+
+  // ***********************************
+  // This linked-row function is used to make table-row, a link
+  $(".linked-row").click(function() {
+    window.open($(this).data("href"), $(this).data("window"));
+  });
+
+
+ // ***********************************
+ // This value will change based on which category is selected:
+ selected_category = 'all';
+
+
+ // ***********************************
+ // Begin the table:
+ document.write('<table id="biztable" class="biztable"> <tr><td>');
+
+
+ // ***********************************
+ // Get the xml document:
+ xmlhttp = new XMLHttpRequest();
+ xmlhttp.open("GET", "data.xml", false);
+ xmlhttp.send();
+ xmlDoc = xmlhttp.responseXML;
+
+
+ // ***********************************
+ // Load the array and begin the for-loop:
+ var bizArr=xmlDoc.getElementsByTagName("biz");
+ for( i = 0; i < bizArr.length; i++ ){
+
+
+  // ***********************************
+  // Load all variables to print
+  var biz_name=bizArr[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+  var website=bizArr[i].getElementsByTagName("site")[0].childNodes[0].nodeValue;
+  var email=bizArr[i].getElementsByTagName("mail")[0].childNodes[0].nodeValue;
+  var phone=bizArr[i].getElementsByTagName("phone")[0].childNodes[0].nodeValue;
+  var street=bizArr[i].getElementsByTagName("street")[0].childNodes[0].nodeValue;
+  var city=bizArr[i].getElementsByTagName("city")[0].childNodes[0].nodeValue;
+  var state=bizArr[i].getElementsByTagName("state")[0].childNodes[0].nodeValue;
+  var zip=bizArr[i].getElementsByTagName("zip")[0].childNodes[0].nodeValue;
+
+  // ***********************************
+  // Create one address variable for output and another for google-maps:
+  var address=street + "<br>" + city + ", " + state + " " + zip;
+  var mapaddress=street+" "+city+" "+state+" "+zip;
+  mapaddress=mapaddress.split(' ').join('+');
+
+
+  // ***********************************
+  // Use the user-key and the map-address to create the url
+  var my_map_key="AIzaSyCK1U58dYc_ULW9D8XjL3Bigrnl6l7ti9M"
+  var google_map_link="https://www.google.com/maps/embed/v1/place?key="+my_map_key+"&q="+mapaddress;
+
+
+  // ***********************************
+  // Write the html for each biz using the variables defined above:
+  document.write('                                                             \
+   <table class="biztable search"                                              \
+          data-mySearch="'+biz_name+" "+city+" "+state+" "+zip+'">             \
+    <tr class="h1">                                                            \
+      <td class="biz_icon" rowspan="5">                                        \
+       <div class="h1 bizicon">                                                \
+       <span class="glyphicon glyphicon-tag"></span>                           \
+       </div>                                                                  \
+      </td>                                                                    \
+      <td class="bizname" colspan="2">                                         \
+       <a title="Visit the Website!"                                           \
+          target="_blank"                                                      \
+          href="'+website+'">'+biz_name+'                                      \
+       </a>                                                                    \
+      </td>                                                                    \
+      <td class="map" rowspan="5">                                             \
+       <iframe                                                                 \
+        width="600"                                                            \
+        height="250"                                                           \
+        frameborder="0" style="border:0"                                       \
+        src="'+google_map_link+'" allowfullscreen>                             \
+       </iframe>                                                               \
+      </td>                                                                    \
+    </tr>                                                                      \
+                                                                               \
+    <tr class="h4">                                                            \
+      <td class="attr_icon">                                                   \
+        <span class="glyphicon glyphicon-link"></span>                         \
+      </td>                                                                    \
+      <td>                                                                     \
+       <a title="Visit the Website!"                                           \
+          target="_blank"                                                      \
+          href="'+website+'">'+website+'                                       \
+       </a>                                                                    \
+      </td>                                                                    \
+    </tr>                                                                      \
+                                                                               \
+    <tr class="h4">                                                            \
+      <td class="attr_icon">                                                   \
+        <span class="glyphicon glyphicon-envelope"></span>                     \
+      </td>                                                                    \
+      <td>                                                                     \
+       <a title="Send an Email!"                                               \
+        target="_top"                                                          \
+        href="mailto:'+email+'">'+email+'                                      \
+       </a>                                                                    \
+      </td>                                                                    \
+    </tr>                                                                      \
+                                                                               \
+    <tr class="h4">                                                            \
+      <td class="attr_icon">                                                   \
+        <span class="glyphicon glyphicon-phone-alt"></span>                    \
+      </td>                                                                    \
+      <td>'+phone+'</td>                                                       \
+    </tr>                                                                      \
+                                                                               \
+    <tr class="h4 last">                                                       \
+      <td class="attr_icon">                                                   \
+        <span class="glyphicon glyphicon-globe"></span>                        \
+      </td>                                                                    \
+      <td>'+address+'</td>                                                     \
+    </tr>                                                                      \
+   </table>                                                                    \
+  '); // end document-write
+
+
+ } // end-for-loop
+
+
+ // ***********************************
+ // End the table:
+ document.write("</td></td></table>");
+
+
+
+/*******************************************************************************
+ * Search Function
+ *  - Case insensative search by keyword
+ *  - Dynamically alters results displayed in the table
+ **********/
+var searchinput = document.getElementById("searchinput");
+function search() {
+ var filter, tables, i;
+ filter = searchinput.value.toUpperCase();
+ tables = document.getElementsByClassName("search");
+ for (i = 0; i < tables.length; i++) {
+  data = tables[i].getAttribute("data-mySearch");
+  if (data.toUpperCase().indexOf(filter) > -1) {
+   tables[i].style.display = "";
+  } else {
+   tables[i].style.display = "none";
+  }
+ }
+}
+
+
+
+</script>
+<br>
+<br>
+<br>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
